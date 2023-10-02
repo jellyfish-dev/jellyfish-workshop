@@ -1,1 +1,3 @@
-jellyfish-server-sdk @ git+https://github.com/jellyfish-dev/python-server-sdk.git@fix-events
+jellyfish-server-sdk @ git+https://github.com/jellyfish-dev/python-server-sdk.git@use-poetry
+notebook
+fastapi
