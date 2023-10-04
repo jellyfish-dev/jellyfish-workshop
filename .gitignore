@@ -1,0 +1,14 @@
+# Environment
+.env
+
+# Virtual environment
+/.venv/
+
+# Python cache
+__pycache__
+
+# Jupyter Notebook
+/**/.ipynb_checkpoints/
+
+# MacOS
+.DS_Store
