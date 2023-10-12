@@ -1,2 +1,2 @@
-jellyfish-server-sdk @ git+https://github.com/jellyfish-dev/python-server-sdk.git@use-poetry
-notebook
+jellyfish-server-sdk @ git+https://github.com/jellyfish-dev/python-server-sdk.git@v0.1.0
+notebook<7.0.0
