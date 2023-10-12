@@ -13,7 +13,7 @@ import {
 } from "./components.ts";
 import { createVideoComopnent, videoMediaStream, startLastSelectedDevice } from "./mediaDevices.ts";
 
-// startLastSelectedDevice();
+startLastSelectedDevice();
 
 type PeerMetadata = {
   name: string;
@@ -31,40 +31,61 @@ connectButton.addEventListener("click", async () => {
   console.log({ token });
 
   // your code here
+  client.connect({
+    signaling: {
+      host: "localhost:5002",
+    },
+    token: tokenInput.value,
+    peerMetadata: { name: "Kamil" },
+  });
 });
 
 // Exercise 2: Get connection status
 // hint: set component text
 // connectionStatus.innerHTML = "Hello world";
 
-// your code here
+// your code here 
+client.addListener("joined", (peerId: string, peers: Peer[]) => {
+  console.log("joined");
+  connectionStatus.innerHTML = "joined";
+});
+
+client.addListener("disconnected", () => {
+  console.log("disconnected");
+  connectionStatus.innerHTML = "disconnected";
+});
 
 // // Exercise 3: Disconnect from jellyfish server
 disconnectButton.addEventListener("click", async () => {
-  console.log("Disconnect clicked!");
+  console.log("Disconnect clicked!")
   // Your code here
+  client.disconnect();
 });
 
 // // Exercise 4: Stream your video track
 
 addVideoTrackButton.addEventListener("click", async () => {
   console.log(videoMediaStream);
-
+  
   if (!videoMediaStream) throw Error("Stram is empty!");
-
+  
   const vidoeTrack = videoMediaStream.getVideoTracks()?.[0];
   if (!vidoeTrack) throw Error("Media stream has no video track!");
-
+  
   // Your code for both here
+  const trackId = client.addTrack(vidoeTrack, videoMediaStream);
+  localTrackId.innerHTML = trackId;
 });
-
 // // Exercise 5: Get remote video trackId and display it
 // // Hint: localTrackId.innerHTML = trackId
 
 // // Exercise 6: Stop track
 removeVideoTrackButton.addEventListener("click", async () => {
-  console.log("Remove track clicked!");
+  console.log("Remove track clicked!")
   // Your code here
+  client.removeTrack(localTrackId.innerHTML);
+
+  localTrackId.innerHTML = "";
 });
 
 // // Exercise 7: Get remote tracks
@@ -77,3 +98,13 @@ removeVideoTrackButton.addEventListener("click", async () => {
 // // document.getElementById(trackId)?.remove();
 
 // // Your code here
+client.addListener("trackReady", (trackContext) => {
+  if (!trackContext.stream) throw Error("Track stream is null!");
+
+  const newVideoElement = createVideoComopnent(trackContext.trackId, trackContext.stream);
+  remoteTracksContainer.appendChild(newVideoElement);
+});
+
+client.addListener("trackRemoved", (trackContext) => {
+  document.getElementById(trackContext.trackId)?.remove();
+});
