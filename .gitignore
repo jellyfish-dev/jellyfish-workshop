@@ -12,3 +12,7 @@ __pycache__
 
 # MacOS
 .DS_Store
+
+# Intellij
+*.iml
+.idea
