@@ -12,6 +12,7 @@ import {
   tokenInput,
 } from "./components.ts";
 import { createVideoComopnent, videoMediaStream, startLastSelectedDevice } from "./mediaDevices.ts";
+import { startHlsBtn, startHls } from "./hls.ts";
 
 startLastSelectedDevice();
 
@@ -44,7 +45,7 @@ connectButton.addEventListener("click", async () => {
 // hint: set component text
 // connectionStatus.innerHTML = "Hello world";
 
-// your code here 
+// your code here
 client.addListener("joined", (peerId: string, peers: Peer[]) => {
   console.log("joined");
   connectionStatus.innerHTML = "joined";
@@ -66,12 +67,12 @@ disconnectButton.addEventListener("click", async () => {
 
 addVideoTrackButton.addEventListener("click", async () => {
   console.log(videoMediaStream);
-  
+
   if (!videoMediaStream) throw Error("Stram is empty!");
-  
+
   const vidoeTrack = videoMediaStream.getVideoTracks()?.[0];
   if (!vidoeTrack) throw Error("Media stream has no video track!");
-  
+
   // Your code for both here
   const trackId = client.addTrack(vidoeTrack, videoMediaStream);
   localTrackId.innerHTML = trackId;
@@ -98,6 +99,7 @@ removeVideoTrackButton.addEventListener("click", async () => {
 // // document.getElementById(trackId)?.remove();
 
 // // Your code here
+
 client.addListener("trackReady", (trackContext) => {
   if (!trackContext.stream) throw Error("Track stream is null!");
 
@@ -107,4 +109,13 @@ client.addListener("trackReady", (trackContext) => {
 
 client.addListener("trackRemoved", (trackContext) => {
   document.getElementById(trackContext.trackId)?.remove();
+});
+
+// Exercise 8: Online meeting
+
+// Exercise 9: HLS
+
+startHlsBtn.addEventListener("click", () => {
+  console.log("Start button HLS clicked");
+  startHls();
 });
