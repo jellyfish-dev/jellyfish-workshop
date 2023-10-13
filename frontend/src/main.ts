@@ -14,7 +14,7 @@ import {
 import { createVideoComopnent, videoMediaStream, startLastSelectedDevice } from "./mediaDevices.ts";
 // import { startHlsBtn, startHls } from "./hls.ts";
 
-startLastSelectedDevice();
+// startLastSelectedDevice();
 
 type PeerMetadata = {
   name: string;
