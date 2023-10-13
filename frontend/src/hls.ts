@@ -10,8 +10,6 @@ import Hls from "hls.js";
 
 // const video = hlsVideoComponentOrNull;
 
-// export const roomId: string = "b0b0285f-871c-4926-aa04-846b54db6f44";
-
 // export const startHls = () => {
 //   var videoSrc = ``;
 //   if (Hls.isSupported()) {
