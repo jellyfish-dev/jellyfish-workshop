@@ -12,8 +12,9 @@ import {
   tokenInput,
 } from "./components.ts";
 import { createVideoComopnent, videoMediaStream, startLastSelectedDevice } from "./mediaDevices.ts";
+// import { startHlsBtn, startHls } from "./hls.ts";
 
-// startLastSelectedDevice();
+startLastSelectedDevice();
 
 type PeerMetadata = {
   name: string;
@@ -77,3 +78,8 @@ removeVideoTrackButton.addEventListener("click", async () => {
 // // document.getElementById(trackId)?.remove();
 
 // // Your code here
+
+// Exercise 8: Online meeting
+
+// Exercise 9: HLS
+
