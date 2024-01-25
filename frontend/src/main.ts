@@ -1,4 +1,5 @@
 import "./style.css";
+
 import { JellyfishClient, Peer } from "@jellyfish-dev/ts-client-sdk";
 import {
     connectButton,
@@ -14,6 +15,7 @@ const createVideoComponent = (trackId: string, stream: MediaStream): HTMLVideoEl
     newVideoElement.setAttribute("id", trackId);
     newVideoElement.setAttribute("class", "h-[150px] w-[200px]");
     newVideoElement.srcObject = stream;
+    newVideoElement.muted = true;
     newVideoElement.onloadedmetadata = () => {
         newVideoElement.play();
     };

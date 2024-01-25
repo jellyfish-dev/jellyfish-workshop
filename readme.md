@@ -20,27 +20,18 @@ ifconfig | grep 'inet ' | grep -Fv 127.0.0.1 | awk '{print $2}'
 Potrzebujesz wskazać jellyfishowi ścieżkę do plików, 
 jest to ścieżka do rodzica wyżej wspomnianego katalogu `file_component_sources`
 
-U mnie to: `/Users/kamilstasiak/Desktop/example_files/`
+U mnie ten katalog znajduje się w: `/Users/kamilstasiak/Desktop/example_files/`
 
 Uruchom jellyfisha w dockerze albo ze źródeł
 
-## A. W dockerze
-
-... TBD
-
-## B. Ze źródeł
+## Ze źródeł
 ```shell
 JF_WEBRTC_TURN_IP=${myip} JF_HOST=localhost:5002 JF_WEBRTC_TURN_LISTEN_IP=0.0.0.0 JF_RESOURCES_BASE_PATH=/Users/kamilstasiak/Desktop/example_files mix phx.server
 ```
 
-# Odpalić dashboard
-
-## A. Wersja online
+# Odpal dashboard
 
 [https://jellyfish-dev.github.io/jellyfish-dashboard/](https://jellyfish-dev.github.io/jellyfish-dashboard/)
-
-## B. Ze źródeł
-
 
 # Łączenie się do jellyfisha i tworzenie pokoju
 
@@ -70,12 +61,20 @@ Po prawej stronie pojawi się nowy `File component`.
 Jellyfish streamuje video aż dojdzie do końca pliku. 
 Żeby ponownie puścić video trzeba usunąć file component i dodać go ponownie
 
-Jeżeli wszystko działa to możesz wybrać `Disconnect` i reużyć tego peer w przykładzie z kodem, 
+Jeżeli wszystko działa to możesz wybrać `Disconnect` i reużyć tego peera w swoim kodzie, 
 albo możesz utworzyć nowego i tutaj na dashbordzie sprawdzać, czy jakieś multimedia płyną.
 Pamiętaj, że peera można połączyć tylko raz i jak będzie połączony z dashboardu to nie uda się nim połączyć z kodu.
 
-# Kod JS który to wyświetla 
+# Kod
 
+Do połączenia potrzebny jest tylko skopiowny wcześniej Peer token.
 
+Jedyna istotna zależność do zainstalowanie to `@jellyfish-dev/ts-client-sdk`
+
+Kod obsługujący GUI znajduje się w pliku `src/main.ts`.
+
+Minimalny kod służący do automatycznego połączenia się z Jellyfishem znajduje się w pliku `src/noGui.ts`.
+
+W pliku `index.html` wybierz z którego chcesz korzystać 
 
 
