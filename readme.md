@@ -9,6 +9,8 @@ Plik ten musi być encodowany następująco:
 > You can convert the video using the following ffmpeg command: 
 > ffmpeg -i input_video -filter:v fps=30 -vcodec libx264 output.h264 
 
+[Docs](https://jellyfish-dev.github.io/jellyfish-docs/getting_started/components/file)
+
 # Uruchom Jellyfish Media Server
 
 Znajdź swoje IP
