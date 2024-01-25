@@ -22,9 +22,10 @@ jest to ścieżka do rodzica wyżej wspomnianego katalogu `file_component_source
 
 U mnie ten katalog znajduje się w: `/Users/kamilstasiak/Desktop/example_files/`
 
-Uruchom jellyfisha w dockerze albo ze źródeł
+## Uruchomienie jellyfisha
 
-## Ze źródeł
+Ścieżkę do katalogu z plikami podaj w `JF_RESOURCES_BASE_PATH`
+
 ```shell
 JF_WEBRTC_TURN_IP=${myip} JF_HOST=localhost:5002 JF_WEBRTC_TURN_LISTEN_IP=0.0.0.0 JF_RESOURCES_BASE_PATH=/Users/kamilstasiak/Desktop/example_files mix phx.server
 ```
@@ -40,7 +41,7 @@ W jellyfish dashboard wybierz:
 - Wybierz zielony przycisk `Connect to server`
 - Wybierz Zielony `+` który w tooltipie podpowiada `Create room`
 
-# Łączenie użytkownika żeby sprawdzić czy video się przesyła
+# Podłączenie użytkownika żeby sprawdzić czy video się przesyła
 Żeby odbierać video trzebe utworzyć Peera (na dashbordzie opisane jako Client). 
 Na początku utwórzmy jednego peera i połączmy się nim z dashboardu żeby sprawdzić czy jellyfish poprawnie wysyła video.
 
@@ -75,6 +76,6 @@ Kod obsługujący GUI znajduje się w pliku `src/main.ts`.
 
 Minimalny kod służący do automatycznego połączenia się z Jellyfishem znajduje się w pliku `src/noGui.ts`.
 
-W pliku `index.html` wybierz z którego chcesz korzystać 
+W pliku `index.html` wybierz, z którego chcesz korzystać. 
 
 
