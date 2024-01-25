@@ -1,121 +1,78 @@
 import "./style.css";
-import "./mediaDevices.ts";
 import { JellyfishClient, Peer } from "@jellyfish-dev/ts-client-sdk";
 import {
-  addVideoTrackButton,
-  connectButton,
-  connectionStatus,
-  disconnectButton,
-  localTrackId,
-  remoteTracksContainer,
-  removeVideoTrackButton,
-  tokenInput,
+    connectButton,
+    connectionStatus,
+    disconnectButton,
+    remoteTracksContainer,
+    remoteTracksStatus,
+    tokenInput,
 } from "./components.ts";
-import { createVideoComopnent, videoMediaStream, startLastSelectedDevice } from "./mediaDevices.ts";
-import { startHlsBtn, startHls } from "./hls.ts";
 
-startLastSelectedDevice();
+const createVideoComponent = (trackId: string, stream: MediaStream): HTMLVideoElement => {
+    const newVideoElement = document.createElement("video");
+    newVideoElement.setAttribute("id", trackId);
+    newVideoElement.setAttribute("class", "h-[150px] w-[200px]");
+    newVideoElement.srcObject = stream;
+    newVideoElement.onloadedmetadata = () => {
+        newVideoElement.play();
+    };
+    return newVideoElement;
+};
+
+connectionStatus.innerHTML = "disconnected";
 
 type PeerMetadata = {
-  name: string;
+    name: string;
 };
 
 type TrackMetadata = {
-  type: "camera" | "microphone" | "screenshare";
+    type: "camera" | "microphone" | "screenshare";
 };
 
 export const client = new JellyfishClient<PeerMetadata, TrackMetadata>();
 
-// Exercise 1: Connect to Jellyfish Media Server
 connectButton.addEventListener("click", async () => {
-  const token = tokenInput.value;
-  console.log({ token });
+    const token = tokenInput.value;
+    console.log({ token });
 
-  // your code here
-  client.connect({
-    signaling: {
-      host: "localhost:5002",
-    },
-    token: tokenInput.value,
-    peerMetadata: { name: "Kamil" },
-  });
+    client.connect({
+        signaling: {
+            host: "localhost:5002",
+        },
+        token: tokenInput.value,
+        peerMetadata: { name: "" },
+    });
 });
 
-// Exercise 2: Get connection status
-// hint: set component text
-// connectionStatus.innerHTML = "Hello world";
-
-// your code here
 client.addListener("joined", (peerId: string, peers: Peer[]) => {
-  console.log("joined");
-  connectionStatus.innerHTML = "joined";
+    console.log("joined");
+    connectionStatus.innerHTML = "joined";
 });
 
 client.addListener("disconnected", () => {
-  console.log("disconnected");
-  connectionStatus.innerHTML = "disconnected";
+    console.log("disconnected");
+    connectionStatus.innerHTML = "disconnected";
 });
 
-// // Exercise 3: Disconnect from jellyfish server
 disconnectButton.addEventListener("click", async () => {
-  console.log("Disconnect clicked!")
-  // Your code here
-  client.disconnect();
+    console.log("Disconnect clicked!")
+    client.disconnect();
 });
 
-// // Exercise 4: Stream your video track
-
-addVideoTrackButton.addEventListener("click", async () => {
-  console.log(videoMediaStream);
-
-  if (!videoMediaStream) throw Error("Stram is empty!");
-
-  const vidoeTrack = videoMediaStream.getVideoTracks()?.[0];
-  if (!vidoeTrack) throw Error("Media stream has no video track!");
-
-  // Your code for both here
-  const trackId = client.addTrack(vidoeTrack, videoMediaStream);
-  localTrackId.innerHTML = trackId;
+client.addListener("trackAdded", (trackContext) => {
+    remoteTracksStatus.innerHTML = "loading"
 });
-// // Exercise 5: Get remote video trackId and display it
-// // Hint: localTrackId.innerHTML = trackId
-
-// // Exercise 6: Stop track
-removeVideoTrackButton.addEventListener("click", async () => {
-  console.log("Remove track clicked!")
-  // Your code here
-  client.removeTrack(localTrackId.innerHTML);
-
-  localTrackId.innerHTML = "";
-});
-
-// // Exercise 7: Get remote tracks
-
-// // Hint: Add new video track componet
-// // const newVideoElement = createVideoComopnent(trackId, stream);
-// // remoteTracksContainer.appendChild(newVideoElement);
-
-// // Hint: Remove video track component
-// // document.getElementById(trackId)?.remove();
-
-// // Your code here
 
 client.addListener("trackReady", (trackContext) => {
-  if (!trackContext.stream) throw Error("Track stream is null!");
+    if (!trackContext.stream) throw Error("Stream is null!");
+    remoteTracksStatus.innerHTML = "Ready"
 
-  const newVideoElement = createVideoComopnent(trackContext.trackId, trackContext.stream);
-  remoteTracksContainer.appendChild(newVideoElement);
+    const newVideoElement = createVideoComponent(trackContext.trackId, trackContext.stream);
+    remoteTracksContainer.appendChild(newVideoElement);
 });
 
 client.addListener("trackRemoved", (trackContext) => {
-  document.getElementById(trackContext.trackId)?.remove();
-});
-
-// Exercise 8: Online meeting
-
-// Exercise 9: HLS
-
-startHlsBtn.addEventListener("click", () => {
-  console.log("Start button HLS clicked");
-  startHls();
+    remoteTracksStatus.innerHTML = ""
+    document.getElementById(trackContext.trackId)?.remove();
 });

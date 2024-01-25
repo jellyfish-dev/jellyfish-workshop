@@ -1,31 +1,3 @@
-/**
- * How to use it
- *
- * # Click handler
- *
- * connectButton.addEventListener("click", async () => {
- *   console.log("Clicked!");
- * });
- *
- * # Change UI
- *
- * connectionStatus.innerHTML = "joined";
- */
-
-/* Video player */
-
-const videoPlayerOrNull = document.querySelector<HTMLVideoElement>("#local-video-player");
-if (!videoPlayerOrNull) throw Error("Video player not found!");
-
-export const videoPlayer = videoPlayerOrNull;
-
-/* Audio icon */
-
-const audioIndicatorOrNull = document.querySelector<HTMLVideoElement>("#audio-indicator");
-if (!audioIndicatorOrNull) throw Error("Audio emoji not found!");
-
-export const audioIndicator = audioIndicatorOrNull;
-
 /* Token input */
 
 const tokenInputOrNull: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#token-input");
@@ -33,9 +5,6 @@ if (!tokenInputOrNull) throw Error("Token input not found!");
 
 tokenInputOrNull.value = localStorage.getItem("token") || "";
 
-// peerTokenInput.addEventListener("change", (event) => {
-//   console.log({ event });
-// });
 
 tokenInputOrNull.addEventListener("input", (event) => {
   const value = (event.target as HTMLInputElement).value;
@@ -65,28 +34,16 @@ if (!disconnectButtonOrNull) throw Error("Disconnect button not found!");
 
 export const disconnectButton: HTMLButtonElement = disconnectButtonOrNull;
 
-/* Add video track button */
-
-const addVideoTrackButtonOrNull = document.querySelector<HTMLButtonElement>("#add-video-track-btn");
-if (!addVideoTrackButtonOrNull) throw Error("Add video track button not found!");
-
-export const addVideoTrackButton: HTMLButtonElement = addVideoTrackButtonOrNull;
-
-const removeVideoTrackButtonOrNull = document.querySelector<HTMLButtonElement>("#remove-video-track-btn");
-if (!removeVideoTrackButtonOrNull) throw Error("Remove video track button not found!");
-
-export const removeVideoTrackButton: HTMLButtonElement = removeVideoTrackButtonOrNull;
-
-// Local track id
-
-const localTrackIdOrNull = document.querySelector<HTMLButtonElement>("#local-track-id");
-if (!localTrackIdOrNull) throw Error("Local track span not found!");
-
-export const localTrackId: HTMLButtonElement = localTrackIdOrNull;
-
 // Remote track container
 
 const remoteTracksContainerOrNull = document.querySelector<HTMLButtonElement>("#remote-tracks-container");
 if (!remoteTracksContainerOrNull) throw Error("Remote track container not found!");
 
 export const remoteTracksContainer: HTMLButtonElement = remoteTracksContainerOrNull;
+
+// Remote track status
+
+const remoteTracksStatusOrNull = document.querySelector<HTMLSpanElement>("#remote-tracks-status");
+if (!remoteTracksStatusOrNull) throw Error("Remote track status not found!");
+
+export const remoteTracksStatus: HTMLSpanElement = remoteTracksStatusOrNull;
